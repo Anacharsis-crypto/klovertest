@@ -47,5 +47,15 @@ func TestLatest(t *testing.T) {
     }
     t2End = time.Now().Unix()
     t.Logf("rate-limit-test: total time: %vs", (t2End-t2Start))
+
+    // finally grab a code we've got cached but is older, so we can see the age
+    // > 0 seconds
+    t.Logf("grab-older-zip: retrieving 48504 which we got before the wait..")
+    t3Start := time.Now().Unix()
+    got = Latest("48504")
+    t3End := time.Now().Unix()
+    t.Logf("code: 48504 got: %v, call duration %vs", got, (t3End-t3Start))
+
+
 }
 

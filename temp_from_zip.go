@@ -192,7 +192,7 @@ func _Pull(validatedZip string) (CacheEntry, bool) {
     // no real fault tolerance here, idk golang well enough
     // to do it idomatically. a bad url (eg nohttps://) panics.
     reqString := fmt.Sprintf(PULL_URL, validatedZip, API_KEY)
-    fmt.Printf("https requesting: %s",  reqString)
+    fmt.Printf("https requesting: %s\n",  reqString)
     resp, err := http.Get(reqString)
     respBody, err2 := ioutil.ReadAll(resp.Body)
 
@@ -222,7 +222,7 @@ func _Pull(validatedZip string) (CacheEntry, bool) {
 // Type conversion: remove private data and add error verbosity
 func _PopulateReturn(entry CacheEntry, errorString string) AreaWeatherData {
     ret := AreaWeatherData{temp:entry.temp, humidity:entry.humidity, windSpeed:entry.windSpeed}
-    ret.dataAgeSeconds = strconv.Itoa(int(entry.timestamp - time.Now().Unix()))
+    ret.dataAgeSeconds = strconv.Itoa(int(time.Now().Unix() - entry.timestamp))
     ret.error = errorString
     return ret
 }
